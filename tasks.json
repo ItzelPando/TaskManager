@@ -1,1 +1,24 @@
-[{"id":1,"title":"Prueba","description":"Que se guarde, por favor.","status":"Pending","createdDate":"2025-06-03 00:49:11"},{"id":2,"title":"una más","description":"Hagamos algunas pruebas","status":"Pending","createdDate":"2025-06-03 01:04:39"}]
+[
+  {
+    "id": 1,
+    "title": "Prueba",
+    "description": "Que se guarde, por favor.",
+    "status": "Completed",
+    "createdDate": "2025-06-03 00:49:11"
+  },
+  {
+    "id": 2,
+    "title": "una más",
+    "description": "Hagamos algunas pruebas",
+    "status": "Completed",
+    "createdDate": "2025-06-03 01:04:39"
+  },
+  {
+    "id": 3,
+    "title": "prueba de fecha",
+    "description": "ya agrega la fechaaaaa",
+    "status": "Completed",
+    "createdDate": "2025-06-03 01:44:15",
+    "completedDate": "2025-06-03 01:44:24"
+  }
+]

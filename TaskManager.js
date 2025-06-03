@@ -21,7 +21,7 @@ class TaskManager {
   }
 
   saveTasks() {
-    fs.writeFileSync(this.fileName, JSON.stringify(this.tasks));
+    fs.writeFileSync(this.fileName, JSON.stringify(this.tasks,null,2));
   }
 
   addTask(title, description) {
@@ -33,7 +33,8 @@ class TaskManager {
       title: title,
       description: description,
       status: 'Pending',
-      createdDate: new Date().toISOString().replace('T', ' ').substring(0, 19)
+      createdDate: new Date().toISOString().replace('T', ' ').substring(0, 19),
+      completedDate: null
     };
     
     this.tasks.push(task);
@@ -47,25 +48,41 @@ class TaskManager {
       return;
     }
 
-    console.log('\n' + '='.repeat(80));
-    console.log(`${'ID'.padEnd(5)} ${'TITLE'.padEnd(20)} ${'STATUS'.padEnd(10)} ${'CREATED DATE'.padEnd(20)} ${'DESCRIPTION'.padEnd(30)}`);
-    console.log('-'.repeat(80));
+    console.log('\n' + '='.repeat(110));
+    console.log(`${'ID'.padEnd(5)} ${'TITLE'.padEnd(20)} ${'STATUS'.padEnd(10)} ${'CREATED DATE'.padEnd(20)} ${'COMPLETED DATE'.padEnd(20)} ${'DESCRIPTION'.padEnd(30)}`);
+    console.log('-'.repeat(110));
 
     for (const task of this.tasks) {
+      const completedDate = (task.completedDate && task.status === 'Completed')
+      ? task.completedDate
+      : '';
+
       console.log(
-        `${String(task.id).padEnd(5)} ${task.title.substring(0, 18).padEnd(20)} ${task.status.padEnd(10)} ${task.createdDate.padEnd(20)} ${task.description.substring(0, 28).padEnd(30)}`
+        `${String(task.id).padEnd(5)} ${task.title.substring(0, 18).padEnd(20)} ${task.status.padEnd(10)} ${task.createdDate.padEnd(20)} ${completedDate.padEnd(20)} ${task.description.substring(0, 28).padEnd(30)}`
       );
     }
     
-    console.log('='.repeat(80) + '\n');
+    console.log('='.repeat(110) + '\n');
   }
 
   markComplete(taskId) {
+    taskId = parseInt(taskId);
+
+    if (isNaN(taskId)) {
+    console.log('Invalid task ID.');
+    return;}
+
     for (const task of this.tasks) {
       if (task.id === taskId) {
+        if (task.status === 'Completed'){
+          console.log(`Task '${task.title}' is already marked as completed.`);
+          return;
+        }
+
         task.status = 'Completed';
+        task.completedDate = new Date().toISOString().replace('T', ' ').substring(0, 19);
         this.saveTasks();
-        console.log(`Task '${task.title}' marked as completed!`);
+        console.log(`Task '${task.title}' marked as completedon ${task.completedDate}!`);
         return;
       }
     }
