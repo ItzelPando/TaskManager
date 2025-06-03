@@ -25,8 +25,11 @@ class TaskManager {
   }
 
   addTask(title, description) {
+    const maxId = this.tasks.reduce((max,task)=> Math.max(max,task.id),0);
+    const newId = maxId + 1;
+
     const task = {
-      id: this.tasks.length + 1,
+      id: newId,
       title: title,
       description: description,
       status: 'Pending',
